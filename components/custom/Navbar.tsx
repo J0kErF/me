@@ -1,63 +1,74 @@
-// components/custom/Navbar.tsx
 "use client";
 
-import { Menu, X } from "lucide-react";
+import { Menu, X, Download } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "pymaster", href: "/#pymaster" },
-  { label: "Projects", href: "/#projects" },
-  { label: "Contact", href: "/#quote" },
+  { label: "About", href: "/#about" },
+  { label: "Work", href: "/#work" },
+  { label: "PyMaster", href: "/#pymaster" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
-        {/* Logo / Brand */}
-        <Link href="/" className="text-xl font-bold text-indigo-600">
-          Mohammad Yosef
+    <header className="dark sticky top-0 z-50 border-b border-border bg-background/90 text-foreground backdrop-blur">
+      <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
+        <Link href="/" className="flex items-center gap-2 font-semibold">
+          <span className="label-mono flex h-8 w-8 items-center justify-center rounded-md bg-saffron text-sm text-ink">
+            MY
+          </span>
+          <span className="hidden sm:inline">Mohammad Yosef</span>
         </Link>
 
-        {/* Desktop Links */}
-        <nav className="hidden md:flex gap-6">
+        <nav className="hidden items-center gap-6 md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-gray-700 hover:text-indigo-600 transition"
+              className="text-sm font-medium text-foreground/75 transition hover:text-saffron"
             >
               {link.label}
             </Link>
           ))}
+          <Button size="sm" asChild>
+            <a href="/Mohammad-Yosef-CV.pdf" download>
+              CV <Download className="ml-1 h-3.5 w-3.5" />
+            </a>
+          </Button>
         </nav>
 
-        {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-gray-700 hover:text-indigo-600 transition"
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileOpen}
+          className="text-foreground/80 transition hover:text-saffron md:hidden"
         >
-          {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-white border-t shadow-sm px-4 pb-4">
+        <div className="border-t border-border px-6 pb-4 md:hidden">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setMobileOpen(false)}
-              className="block py-2 text-sm font-medium text-gray-700 hover:text-indigo-600"
+              className="block py-2 text-sm font-medium text-foreground/80 hover:text-saffron"
             >
               {link.label}
             </Link>
           ))}
+          <Button size="sm" className="mt-2 w-full" asChild>
+            <a href="/Mohammad-Yosef-CV.pdf" download>
+              Download CV <Download className="ml-1 h-3.5 w-3.5" />
+            </a>
+          </Button>
         </div>
       )}
     </header>

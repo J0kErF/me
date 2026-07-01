@@ -3,110 +3,178 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, ExternalLink } from "lucide-react";
+import { fadeUp, staggerChildren, viewportOnce } from "@/lib/motion";
+
+const spotlight = {
+  title: "Alam Al-Tifl · عالم الطفل",
+  badge: "Launching soon",
+  description:
+    "An Arabic (RTL) educational platform for children aged 3–6 — a subscription-gated content library with a full admin CMS, built for scale and a full security audit completed before launch.",
+  tech: ["Next.js 16", "React 19", "Firebase", "TypeScript", "Tailwind CSS"],
+};
 
 const projects = [
   {
-    title: "AC car parts Inventory System",
+    title: "Linkna",
     description:
-      "A modern inventory management app for A/C spare parts using Next.js, Clerk, MongoDB, and Cloudinary — built for speed and accuracy.",
-    tech: ["Next.js", "MongoDB", "Clerk", "Cloudinary"],
-    link: "https://github.com/J0kErF/sam-admin",
+      "Link-in-bio SaaS with a marketplace, digital menus, and order management — onboarded 10 paying businesses in its first week.",
+    tech: ["Next.js", "TypeScript", "MongoDB", "Clerk"],
+    link: "https://linkna.org",
+    linkLabel: "Visit site",
   },
   {
-    title: "Dexpress Logistics Platform",
+    title: "Dexpress",
     description:
-      "Multi-role logistics dashboard with admin, courier, and vendor interfaces. Includes shipment routing, filtering, and map interactions.",
-    tech: ["Next.js", "Leaflet", "MongoDB", "Tailwind"],
+      "Multi-role logistics platform with admin, courier, and vendor dashboards — shipment routing, filtering, and live map operations.",
+    tech: ["Next.js", "Leaflet", "MongoDB"],
     link: "https://github.com/J0kErF/dexpress",
+    linkLabel: "View on GitHub",
+  },
+  {
+    title: "AC Parts Inventory",
+    description:
+      "Production inventory system for an A/C spare-parts business — fast search, image uploads, and role-based access.",
+    tech: ["Next.js", "Clerk", "MongoDB", "Cloudinary"],
+    link: "https://github.com/J0kErF/sam-admin",
+    linkLabel: "View on GitHub",
+  },
+  {
+    title: "Mikiyal",
+    description:
+      "NLP tool built during the Hasoub Accelerator that scans training datasets for potential bias and flags ethical concerns.",
+    tech: ["Python", "Pandas", "NLP", "Streamlit"],
+    link: "https://github.com/J0kErF/Mikyal",
+    linkLabel: "View on GitHub",
+  },
+  {
+    title: "PCL Radar",
+    description:
+      "Passive coherent location research for drone detection — an academic paper plus Python signal-processing simulations, built through PyMaster R&D.",
+    tech: ["Python", "NumPy", "SciPy"],
   },
   {
     title: "Unix Shell in C",
     description:
-      "Custom-built mini Unix shell in C, supporting piping, redirection, and built-in commands — designed for academic performance and control.",
+      "A minimal Unix shell supporting piping, redirection, and built-in commands — written for systems-level control.",
     tech: ["C", "Unix", "Makefile"],
     link: "https://github.com/J0kErF/Simple-Unix-Shell",
-  },
-  {
-    title: "Mikiyal - AI Bias Detection Tool",
-    description:
-      "Built during Hasoub Accelerator — this tool analyzes AI datasets for bias and flags potential ethical concerns using NLP models.",
-    tech: ["Python", "Pandas", "NLP", "Streamlit"],
-    link: "https://github.com/J0kErF/Mikyal",
+    linkLabel: "View on GitHub",
   },
 ];
 
 export default function Projects() {
   return (
-    <section
-      id="projects"
-      className="py-20 px-4 bg-white border-t border-gray-200"
-    >
-      <div className="max-w-6xl mx-auto">
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-3xl sm:text-4xl font-bold text-center text-indigo-700 mb-10"
+    <section id="work" className="dark scroll-mt-16 bg-background text-foreground">
+      <div className="mx-auto max-w-5xl px-6 py-20 sm:py-28">
+        <motion.p
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          className="label-mono text-xs text-saffron"
         >
-          Projects I’ve Done
+          Selected work
+        </motion.p>
+        <motion.h2
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl"
+        >
+          Shipped, not just started.
         </motion.h2>
 
+        {/* Spotlight */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 0.8 }}
-          className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          className="mt-10 rounded-lg border border-border bg-card p-8 sm:p-10"
         >
-          {projects.map((project, idx) => (
-            <div
-              key={idx}
-              className="bg-gray-50 p-6 rounded-xl border shadow-sm hover:shadow-md transition"
+          <span className="label-mono inline-block rounded-full border border-saffron/40 px-2.5 py-1 text-[11px] text-saffron">
+            {spotlight.badge}
+          </span>
+          <h3 className="mt-4 text-2xl font-semibold sm:text-3xl">
+            {spotlight.title}
+          </h3>
+          <p className="mt-3 max-w-2xl text-sm text-foreground/80 sm:text-base">
+            {spotlight.description}
+          </p>
+          <div className="mt-5 flex flex-wrap gap-2 text-xs">
+            {spotlight.tech.map((t) => (
+              <span
+                key={t}
+                className="rounded-full bg-accent px-2.5 py-1 text-accent-foreground"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Grid */}
+        <motion.div
+          variants={staggerChildren}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {projects.map((project) => (
+            <motion.div
+              key={project.title}
+              variants={fadeUp}
+              className="flex flex-col rounded-lg border border-border bg-card p-6"
             >
-              <h3 className="text-lg font-semibold text-indigo-600 mb-2">
-                {project.title}
-              </h3>
-              <p className="text-sm text-gray-700 mb-3">{project.description}</p>
-              <div className="flex flex-wrap gap-2 text-xs mb-4">
-                {project.tech.map((tech, i) => (
+              <h3 className="text-lg font-semibold">{project.title}</h3>
+              <p className="mt-2 flex-1 text-sm text-foreground/75">
+                {project.description}
+              </p>
+              <div className="mt-4 flex flex-wrap gap-1.5 text-xs">
+                {project.tech.map((t) => (
                   <span
-                    key={i}
-                    className="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded"
+                    key={t}
+                    className="rounded-full bg-accent px-2 py-0.5 text-accent-foreground"
                   >
-                    {tech}
+                    {t}
                   </span>
                 ))}
               </div>
-              <Link
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center text-sm text-indigo-600 hover:underline"
-              >
-                View on GitHub <ExternalLink className="w-4 h-4 ml-1" />
-              </Link>
-            </div>
+              {project.link && (
+                <Link
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 inline-flex items-center text-sm text-saffron hover:underline"
+                >
+                  {project.linkLabel} <ExternalLink className="ml-1 h-3.5 w-3.5" />
+                </Link>
+              )}
+            </motion.div>
           ))}
 
-          {/* GitHub Card */}
-          <div className="bg-gray-50 p-6 rounded-xl border shadow-sm hover:shadow-md transition md:col-span-2 lg:col-span-1">
-            <h3 className="text-lg font-semibold text-indigo-600 mb-2">
-              More Projects on GitHub
-            </h3>
-            <p className="text-sm text-gray-700 mb-3">
-              Explore 30+ open-source projects, tools, and experiments I've built —
-              from code challenges and AI demos to full-stack SaaS templates.
-            </p>
+          <motion.div
+            variants={fadeUp}
+            className="flex flex-col justify-between rounded-lg border border-dashed border-border p-6"
+          >
+            <div>
+              <h3 className="text-lg font-semibold">More on GitHub</h3>
+              <p className="mt-2 text-sm text-foreground/75">
+                Open-source tools, experiments, and smaller builds beyond the
+                highlights above.
+              </p>
+            </div>
             <Link
               href="https://github.com/J0kErF"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center text-sm text-indigo-600 hover:underline"
+              className="mt-4 inline-flex items-center text-sm text-saffron hover:underline"
             >
-              Go to GitHub <ExternalLink className="w-4 h-4 ml-1" />
+              Go to GitHub <ArrowRight className="ml-1 h-3.5 w-3.5" />
             </Link>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>
