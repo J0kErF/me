@@ -1,24 +1,24 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { animate, useInView, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { animate, useReducedMotion } from "framer-motion";
 
 export default function CountUp({
   to,
   suffix = "",
   duration = 1.4,
+  start,
 }: {
   to: number;
   suffix?: string;
   duration?: number;
+  start: boolean;
 }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
   const reduceMotion = useReducedMotion();
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    if (!inView) return;
+    if (!start) return;
     if (reduceMotion) {
       setValue(to);
       return;
@@ -29,10 +29,10 @@ export default function CountUp({
       onUpdate: (v) => setValue(Math.round(v)),
     });
     return () => controls.stop();
-  }, [inView, reduceMotion, to, duration]);
+  }, [start, reduceMotion, to, duration]);
 
   return (
-    <span ref={ref}>
+    <span>
       {value.toLocaleString()}
       {suffix}
     </span>

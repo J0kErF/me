@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import CountUp from "@/components/custom/CountUp";
 import { fadeUp, staggerChildren, viewportOnce } from "@/lib/motion";
@@ -40,6 +41,8 @@ const log = [
 ];
 
 export default function Ledger() {
+  const [statsInView, setStatsInView] = useState(false);
+
   return (
     <section className="dark bg-background text-foreground border-t border-border">
       <div className="mx-auto max-w-5xl px-6 py-16 sm:py-20">
@@ -50,12 +53,13 @@ export default function Ledger() {
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
+          onViewportEnter={() => setStatsInView(true)}
           className="mt-8 grid grid-cols-2 gap-8 sm:grid-cols-4"
         >
           {stats.map((stat) => (
             <motion.div key={stat.label} variants={fadeUp}>
               <div className="font-mono text-3xl font-semibold text-foreground sm:text-4xl">
-                <CountUp to={stat.to} suffix={stat.suffix} />
+                <CountUp to={stat.to} suffix={stat.suffix} start={statsInView} />
               </div>
               <p className="mt-1 text-sm text-muted-foreground">{stat.label}</p>
             </motion.div>
